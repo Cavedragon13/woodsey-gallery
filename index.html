@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Woodsey Image Gallery | Seed13 Productions</title>
+
+  <meta name="description" content="High‑resolution images of Woodsey action‑figure concepts by Seed13 Productions. Forest‑green & earth‑brown palette, easy thumbnails, full‑size links.">
+  <meta name="keywords" content="Woodsey, action figure, toy photography, artist mock‑ups, Seed13 Productions, character design, collectible toys">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ----------  COLOR SYSTEM  ---------- */
+    :root {
+      --forest-green: #2e441a;
+      --earth-brown : #5b3e1d;
+      --cream       : #f5efe0;
+      --tan         : #d4c2a1;
+      --bg-gradient : linear-gradient(135deg,#fffdf4 0%,#f0ead6 100%);
+      --panel       : rgba(255,255,255,.7);
+      --text        : var(--forest-green);
+      --link-hov    : var(--earth-brown);
+    }
+    [data-theme="dark"] {
+      --bg-gradient : linear-gradient(135deg,#171717 0%,#1d1d1d 100%);
+      --panel       : rgba(30,30,30,.7);
+      --text        : #d7dbc8;
+      --link-hov    : #98c379;
+    }
+
+    /* ----------  BASIC RESET  ---------- */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      background:var(--bg-gradient);
+      line-height:1.45;
+      display:flex;flex-direction:column;min-height:100vh;
+    }
+
+    /* ----------  HEADER  ---------- */
+    header{
+      width:100%;
+      backdrop-filter:blur(8px);
+      background:var(--panel);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.8rem 1rem;position:sticky;top:0;z-index:2000;
+    }
+    header h1{
+      font-family:'Kanit',sans-serif;
+      font-size:clamp(1.4rem,4vw,2rem);
+      letter-spacing:.5px;
+      background:linear-gradient(90deg,var(--earth-brown),var(--forest-green));
+      -webkit-background-clip:text;color:transparent;
+      animation:shine 5s linear infinite;
+    }
+    @keyframes shine{
+      to{background-position:200% 0}
+    }
+    header h1 a{text-decoration:none;color:inherit}
+
+    nav a{
+      color:var(--text);text-decoration:none;font-weight:500;
+      margin-left:1.2rem;position:relative;
+    }
+    nav a::after{
+      content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;
+      background:var(--earth-brown);transition:.25s;
+    }
+    nav a:hover::after,nav a[aria-current]::after{width:100%}
+    #themeToggle{
+      border:none;background:none;color:var(--text);font-size:1.35rem;
+      cursor:pointer;margin-left:1rem;transition:transform .25s;
+    }
+    #themeToggle:hover{transform:rotate(20deg)}
+
+    /* ----------  GRID  ---------- */
+    .grid{
+      display:grid;gap:1.2rem;
+      grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));
+      padding:2rem 6vw;
+    }
+    .grid img{
+      width:100%;height:auto;display:block;
+      border-radius:12px;border:2px solid var(--tan);
+      background:var(--tan);
+      transition:transform .25s,box-shadow .25s;
+      box-shadow:0 4px 14px rgba(0,0,0,.12);
+    }
+    .grid a:hover img{
+      transform:scale(1.05) translateY(-4px);
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+    }
+
+    /* ----------  LIGHTBOX  ---------- */
+    .lb-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.9);
+      display:flex;justify-content:center;align-items:center;
+      z-index:1001;visibility:hidden;opacity:0;transition:opacity .25s;
+    }
+    .lb-overlay img{max-width:92vw;max-height:92vh;border-radius:4px}
+    .lb-caption{
+      color:#fff;text-align:center;margin-top:.6rem;font-size:1rem;
+      font-family:'Inter',sans-serif;
+    }
+    .lb-btn{
+      position:fixed;top:50%;transform:translateY(-50%);
+      background:var(--panel);border:none;color:var(--text);
+      padding:.45rem .65rem;font-size:1.6rem;border-radius:6px;
+      cursor:pointer;z-index:1002;transition:background .2s;
+    }
+    .lb-btn:hover{background:var(--tan)}
+    .lb-prev{left:.8rem}.lb-next{right:.8rem}
+    .lb-close{top:1rem;right:1rem;transform:none}
+
+    /* ----------  FOOTER  ---------- */
+    footer{
+      margin-top:auto;text-align:center;padding:1.1rem 0;
+      backdrop-filter:blur(6px);background:var(--panel);
+      font-size:.9rem;
+    }
+    footer img{max-width:110px;width:25%;height:auto;margin-bottom:.4rem;}
+
+    /* ----------  BACK‑TO‑TOP  ---------- */
+    #toTop{
+      position:fixed;right:1rem;bottom:-60px;opacity:0;
+      background:var(--earth-brown);color:#fff;border:none;border-radius:50%;
+      width:46px;height:46px;font-size:1.2rem;cursor:pointer;
+      transition:bottom .3s,opacity .3s,transform .3s;
+      z-index:1500;
+    }
+    #toTop:hover{transform:scale(1.1)}
+    #toTop.show{bottom:1rem;opacity:1}
+
+    /* ----------  UTILITIES  ---------- */
+    img[loading="lazy"]{filter:blur(3px);transition:filter .5s}
+    img[loading="lazy"].loaded{filter:blur(0)}
+  </style>
+</head>
+<body>
+<header>
+  <h1><a href="index.html">Woodsey</a></h1>
+  <nav>
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+  <button id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+</header>
+
+<main class="grid">
+  <!-- ACTION FIGURES -->
+  <a href="assets/images/Action_Figure_Woodsey_01.png" data-lightbox="set" data-title="Woodsey Action Figure 01">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_01.png" alt="Woodsey Action Figure 01">
+  </a>
+  <a href="assets/images/Action_Figure_Woodsey_02.png" data-lightbox="set" data-title="Woodsey Action Figure 02">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_02.png" alt="Woodsey Action Figure 02">
+  </a>
+  <a href="assets/images/Action_Figure_Woodsey_03.png" data-lightbox="set" data-title="Woodsey Action Figure 03">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_03.png" alt="Woodsey Action Figure 03">
+  </a>
+  <a href="assets/images/Action_Figure_Woodsey_04.png" data-lightbox="set" data-title="Woodsey Action Figure 04">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_04.png" alt="Woodsey Action Figure 04">
+  </a>
+  <a href="assets/images/Action_Figure_Woodsey_05.png" data-lightbox="set" data-title="Woodsey Action Figure 05">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_05.png" alt="Woodsey Action Figure 05">
+  </a>
+  <a href="assets/images/Action_Figure_Woodsey_06.png" data-lightbox="set" data-title="Woodsey Action Figure 06">
+    <img loading="lazy" src="assets/images/Action_Figure_Woodsey_06.png" alt="Woodsey Action Figure 06">
+  </a>
+
+  <!-- LAB / VARIANTS -->
+  <a href="assets/images/xLab_Woodsey_01.png" data-lightbox="set" data-title="Woodsey Lab 01">
+    <img loading="lazy" src="assets/images/xLab_Woodsey_01.png" alt="Woodsey Lab 01">
+  </a>
+  <a href="assets/images/xLab_Woodsey_02.png" data-lightbox="set" data-title="Woodsey Lab 02">
+    <img loading="lazy" src="assets/images/xLab_Woodsey_02.png" alt="Woodsey Lab 02">
+  </a>
+  <a href="assets/images/Unboxed_Woodsey.png" data-lightbox="set" data-title="Woodsey Unboxed">
+    <img loading="lazy" src="assets/images/Unboxed_Woodsey.png" alt="Woodsey Unboxed">
+  </a>
+  <a href="assets/images/Unboxed_Dan_Davies.png" data-lightbox="set" data-title="Dan Davies Unboxed">
+    <img loading="lazy" src="assets/images/Unboxed_Dan_Davies.png" alt="Dan Davies Unboxed">
+  </a>
+  <a href="assets/images/Woodsey_Muppet.png" data-lightbox="set" data-title="Woodsey Muppet">
+    <img loading="lazy" src="assets/images/Woodsey_Muppet.png" alt="Woodsey Muppet">
+  </a>
+  <a href="assets/images/Woodsey_Lego.png" data-lightbox="set" data-title="Woodsey Lego">
+    <img loading="lazy" src="assets/images/Woodsey_Lego.png" alt="Woodsey Lego">
+  </a>
+</main>
+
+<footer>
+  <img src="assets/images/Seed_13_logo_02.jpg" alt="Seed13 Productions logo">
+  <p>© 2025 Seed13 Productions</p>
+</footer>
+
+<button id="toTop" aria-label="Scroll to top">▲</button>
+
+<script>
+/* ----------  LIGHTBOX  ---------- */
+(() =>{
+  const links=[...document.querySelectorAll('a[data-lightbox]')];
+  if(!links.length)return;
+
+  let current=-1;
+  const overlay=document.createElement('div');overlay.className='lb-overlay';
+  const img=document.createElement('img');
+  const cap=document.createElement('div');cap.className='lb-caption';
+
+  const prevBtn=Object.assign(document.createElement('button'),{textContent:'❮',className:'lb-btn lb-prev'});
+  const nextBtn=Object.assign(document.createElement('button'),{textContent:'❯',className:'lb-btn lb-next'});
+  const closeBtn=Object.assign(document.createElement('button'),{textContent:'✕',className:'lb-btn lb-close'});
+
+  overlay.append(img,cap,prevBtn,nextBtn,closeBtn);
+  document.body.appendChild(overlay);
+
+  const show=i=>{
+    current=i;const link=links[i];
+    img.src=link.href;cap.textContent=link.dataset.title||'';
+    overlay.style.visibility='visible';overlay.style.opacity='1';
+  };
+  const hide=()=>{overlay.style.opacity='0';setTimeout(()=>overlay.style.visibility='hidden',250);};
+
+  prevBtn.onclick=()=>show((current-1+links.length)%links.length);
+  nextBtn.onclick=()=>show((current+1)%links.length);
+  closeBtn.onclick=hide;
+  overlay.onclick=e=>{if(e.target===overlay)hide();};
+  document.addEventListener('keydown',e=>{
+    if(overlay.style.visibility!=='visible')return;
+    if(e.key==='ArrowLeft')prevBtn.click();
+    if(e.key==='ArrowRight')nextBtn.click();
+    if(e.key==='Escape')hide();
+  });
+  links.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();show(i);}));
+})();
+
+/* ----------  THEME TOGGLE  ---------- */
+(()=>{
+  const root=document.documentElement;
+  const btn=document.getElementById('themeToggle');
+  const apply=mode=>{
+    root.setAttribute('data-theme',mode);
+    btn.textContent=mode==='dark'?'☀️':'🌙';
+    localStorage.setItem('woodsey-theme',mode);
+  };
+  const saved=localStorage.getItem('woodsey-theme')||
+        (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  apply(saved);
+  btn.onclick=()=>apply(root.getAttribute('data-theme')==='light'?'dark':'light');
+})();
+
+/* ----------  BACK‑TO‑TOP  ---------- */
+(()=>{
+  const btn=document.getElementById('toTop');
+  btn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>400)btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+})();
+
+/* ----------  LAZY IMAGE UNBLUR  ---------- */
+document.querySelectorAll('img[loading="lazy"]').forEach(img=>{
+  if(img.complete)img.classList.add('loaded');
+  else img.addEventListener('load',()=>img.classList.add('loaded'));
+});
+</script>
+
+<!-- Project Navigation -->
+<script src="../shared/navigation.js"></script>
+</body>
+</html>
