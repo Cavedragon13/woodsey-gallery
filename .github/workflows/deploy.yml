@@ -12,6 +12,8 @@ jobs:
           lfs: true
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
